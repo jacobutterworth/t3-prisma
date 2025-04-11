@@ -1,20 +1,20 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model posts {
+  id        Int       @id @default(autoincrement())
+  title     String?   @db.VarChar(256)
+  content   String?
+  imageUrl  String?
+  createdAt DateTime  @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime? @db.Timestamptz(6)
+  linkOut   String?
 
-    @@index([name])
+  @@index([title], map: "title_idx")
 }
